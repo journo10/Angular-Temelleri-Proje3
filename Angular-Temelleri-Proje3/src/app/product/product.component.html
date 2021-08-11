@@ -1,0 +1,140 @@
+<!-- Property Binding -->
+<div class="bg-primary text-white m-2 p-2">
+  <h3>Burada {{ model.getProducts1().length }} eleman var</h3>
+</div>
+
+<div>
+  <h3>{{ product.name }}</h3>
+  <h3 [textContent]="product.name"></h3>
+  <img src="assets/img/{{ product.imageUrl }}" />
+  <img [src]="'assets/img/' + product.imageUrl" />
+</div>
+
+<!--Class Binding -- Style Binding -->
+<div [class]="getClasses(1)">
+  Bu kategorideki ilk ürün {{ model.getProductById(1).name }}
+</div>
+
+<div [class]="getClasses(2)">
+  Bu kategorideki ikinci ürün {{ model.getProductById(2).name }}
+</div>
+
+<button class="btn btn-primary" [class.disabled]="!disabled" >Submit</button>
+<button class="btn btn-primary" [class.disabled]="disabled" >Submit</button>
+
+<div class="m-2 p-2" [ngClass]="getClassMap(1)">
+    Bu kategorideki <span [style.color]="color" >ilk ürün</span>  {{ model.getProductById(1).name }}
+</div>
+
+<div class="m-2 p-2" [ngClass]="getClassMap(2)">
+    Bu kategorideki <span  [ngStyle]="getStyles(3)" > ikinci ürün</span> {{ model.getProductById(2).name }}
+</div>
+
+<!--Event Binding -->
+<div (click)="onDivClick()" style="width: 250px; height: 250px; background-color: red;" >
+<button name="btn1" (click)="onSubmit($event)" >Submit</button>
+<button name="btn2" (click)="onSubmit($event)" >Submit</button>
+</div><br><br>
+
+<!--Keyup Event -->
+<input #email (keyup.enter)="onKeyUp(email.value)"><br><br>
+
+<!--Two Way Binding -->
+<input [(ngModel)]= "eposta" (keyup.enter)="onModel()"><br>
+<span>{{eposta}}</span>
+
+<!--Pipes -->
+<h4>Lower-Upper-Title CasePipe</h4>
+<p>{{title}}</p>
+<p>{{title |uppercase}}</p>
+<p>{{title |lowercase}}</p>
+<p>{{title |titlecase}}</p>
+
+<h4>Date Pipe</h4>
+<p>{{today}}</p>
+<p>{{today |date}}</p>
+<p>{{today |date: 'fullDate'}}</p>
+<p>{{today |date: 'medium'}}</p>
+<p>{{today |date: 'shortTime'}}</p>
+<p>{{today |date: 'h:mm:ss'}}</p>
+
+<h4>Dacimal Pipe</h4>
+<p>{{students}}</p>
+<p>{{students|number}}</p>
+<p>{{students|number:'1.1-1'}}</p>
+
+<h4>Currency Pipe</h4>
+<p>{{price|currency:'EUR'}}</p>
+
+<h4>Percent Pipe</h4>
+<p>{{completed |percent}}</p>
+<p>{{completed |percent:'2.2-2'}}</p>
+
+<!-- Custom Pipe -->
+<h1>{{text|summary:13}}</h1>
+
+<!-- *ngIf (1.yol)-->
+<div *ngIf=" model.getProducts1().length> 0" class="bg-primary text-white m-2 p-2">
+  <h3>Burada {{ model.getProducts1().length }} eleman var</h3>
+</div>
+
+<div  *ngIf=" model.getProducts1().length == 0" class="bg-primary text-white m-2 p-2">
+  <h3>Burada 0 eleman var</h3>
+</div>
+
+<!-- *ngIf (2.yol)-->
+<div *ngIf=" model.getProducts1().length> 0; then productList else noProduct " >
+</div>
+
+<ng-template #productList>
+  <div class="bg-primary text-white m-2 p-2">
+    <h3>Burada {{ model.getProducts1().length }} eleman var</h3>
+  </div>
+</ng-template>
+
+
+<ng-template #noProduct>
+  <div class="bg-primary text-white m-2 p-2">
+    <h3>Burada 0 eleman var</h3>
+  </div>
+</ng-template>
+
+<!-- *ngIf (3.yol -div görünmez olur.)-->
+<div [hidden]=" model.getProducts1().length==0" class="bg-primary text-white m-2 p-2">
+  <h3>Burada {{ model.getProducts1().length }} eleman var</h3>
+</div>
+
+<div [hidden]=" model.getProducts1().length!=0" class="bg-primary text-white m-2 p-2">
+  <h3>Burada 0 eleman var</h3>
+</div>
+
+<!-- *ngSwitch (number gelirse) -->
+<div class="bg-info m-2 p-2" [ngSwitch]= "model.getProductCount()">
+  <span *ngSwitchCase ="0">Burada product yok</span>
+  <span *ngSwitchCase ="1">Burada 1 product var</span>
+  <span *ngSwitchCase ="2" >Burada 2 product var</span>
+  <span *ngSwitchDefault >Burada birden fazla product var</span>
+</div>
+
+<!-- *ngSwitch (string gelirse) -->
+<div class="bg-info m-2 p-2" [ngSwitch]= "model.getProductById(2).name">
+  <span *ngSwitchCase ="productName" >Samsung S5</span>
+  <span *ngSwitchCase ="'Samsung S6'">Samsung S6</span>
+  <span *ngSwitchCase ="'Samsung S7'" >Samsung S7</span>
+  <span *ngSwitchDefault >Başka bir ürün var.</span>
+</div>
+<!-- *ngFor -->
+<ul class="list-group m-5">
+  <li class="list-group-item" *ngFor="let product of model.getProducts1();index as i;first as isFirst;last as isLast;odd as isOdd;even as isEven">
+    {{i+1}} - {{product.name}}
+    <span *ngIf="isFirst" class="badge bg-primary">İlk item</span>
+    <span *ngIf="isLast"  class="badge bg-success">son item</span>
+    <span *ngIf="isOdd"   class="badge bg-danger">tek item</span>
+    <span *ngIf="isEven"  class="badge bg-warning">çift item</span>
+  </li>
+</ul>
+
+<!-- Custom Directive -->
+<input type="text" appInputEmail>
+
+

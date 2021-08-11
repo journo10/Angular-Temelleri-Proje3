@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="m-3">
+                <form #form="ngForm" (ngSubmit)="submitForm(form)" >
+
+                    <div *ngIf="formSubmitted && form.invalid" class="bg-danger text-white p-3 my-2">
+                        Bir hata oluştu, bilgilerinizi kontrol ediniz.
+                    </div>
+
+                <div class="bg-info text-white m-2 p-2">
+                    {{ jsonProduct}}
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input [(ngModel)]="newProduct.name" name="name" #name='ngModel' type="text" class="form-control"  required minlength="3" maxlength="10" pattern="^[A-Za-z ]+$">
+                    <div class="alert alert-danger" *ngIf='(formSubmitted || name.dirty) && name.invalid'>
+                        <p *ngFor='let error of getValidationErrors(name)'>
+                                   {{error}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea  required [(ngModel)]="newProduct.description" name="pDescription" #description='ngModel' type="text" class="form-control"></textarea>
+                    <div class="alert alert-danger" *ngIf='!description.valid && description.touched' >Description alanı zorunludur.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input  required [(ngModel)]="newProduct.price" name="pPrice" #price='ngModel' type="text" class="form-control">
+                    <div class="alert alert-danger" *ngIf='!price.valid && price.touched' >Price alanı zorunludur.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageUrl">Image:</label>
+                    <input  required [(ngModel)]="newProduct.imageUrl" name="imageUrl" #imageUrl='ngModel' type="text" class="form-control">
+                    <div class="alert alert-danger" *ngIf='!imageUrl.valid && imageUrl.touched' >Image alanı zorunludur.</div>
+                </div><br>
+
+                <!-- <button (click)="addProduct(newProduct)" class="btn btn-primary" >Submit</button> -->
+                <button type="submit" class="btn btn-primary" >Submit</button> 
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
